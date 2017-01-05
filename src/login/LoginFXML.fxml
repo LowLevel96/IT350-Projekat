@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.LoginFXMLController">
+   <children>
+      <Pane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #666666;">
+         <children>
+            <TextField fx:id="textFieldEmail" layoutX="200.0" layoutY="150.0" prefHeight="50.0" prefWidth="200.0" promptText="Email" />
+            <PasswordField fx:id="passwordFieldPassword" layoutX="201.0" layoutY="212.0" prefHeight="50.0" prefWidth="200.0" promptText="Password" />
+            <Button fx:id="buttonSignIn" layoutX="201.0" layoutY="275.0" mnemonicParsing="false" onAction="#verifyUser" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #008000;" text="Sign-in" textFill="WHITE" />
+            <Label fx:id="labelMessage" alignment="CENTER" contentDisplay="CENTER" layoutX="-4.0" layoutY="347.0" prefHeight="25.0" prefWidth="606.0" textFill="#eb5b5b">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

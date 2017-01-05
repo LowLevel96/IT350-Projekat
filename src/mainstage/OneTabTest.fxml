@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<Tab fx:id="tabtest" text="Untitled Tab" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainstage.OneTabTestController">
+   <content>
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+         <children>
+            <Button fx:id="btnClick" layoutX="149.0" layoutY="161.0" mnemonicParsing="false" onAction="#printHello" prefHeight="40.0" prefWidth="303.0" text="Click" />
+         </children>
+      </AnchorPane>
+   </content>
+</Tab>

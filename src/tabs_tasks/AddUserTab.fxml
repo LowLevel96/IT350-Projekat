@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<Tab text="Dodaj Zaposlenog" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tabs_controll.AddUserController">
+   <content>
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+         <children>
+            <ComboBox fx:id="comboPrivilegija" layoutX="191.0" layoutY="24.0" prefWidth="200.0" promptText="Privilegija" />
+            <TextField fx:id="txtIme" layoutX="80.0" layoutY="80.0" prefWidth="200.0" promptText="Ime" />
+            <TextField fx:id="txtPrezime" layoutX="300.0" layoutY="80.0" prefWidth="200.0" promptText="Prezime" />
+            <TextField fx:id="txtEmail" layoutX="80.0" layoutY="126.0" prefWidth="200.0" promptText="Email" />
+            <PasswordField fx:id="passSifra" layoutX="300.0" layoutY="126.0" prefWidth="200.0" promptText="Sifra" />
+            <TextField fx:id="txtOpstina" layoutX="80.0" layoutY="172.0" prefWidth="200.0" promptText="Opstina" />
+            <TextField fx:id="txtUlica" layoutX="80.0" layoutY="222.0" prefWidth="200.0" promptText="Ulica" />
+            <TextField fx:id="txtGrad" layoutX="300.0" layoutY="172.0" prefWidth="200.0" promptText="Grad" />
+            <Button layoutX="191.0" layoutY="271.0" mnemonicParsing="false" onAction="#dodajZaposlenog" prefWidth="200.0" text="Dodaj" />
+            <Label fx:id="labelMessage" alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="319.0" prefHeight="21.0" prefWidth="600.0" />
+         </children>
+      </AnchorPane>
+   </content>
+</Tab>
