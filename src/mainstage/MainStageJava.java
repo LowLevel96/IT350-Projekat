@@ -93,6 +93,10 @@ public class MainStageJava extends Application {
         root2 = loader2.load();
         root.getTabs().add(root2);
         
+        loader2 = new FXMLLoader(getClass().getResource("/tabs_tasks/ListaProizvodaTab.fxml"));
+        root2 = loader2.load();
+        root.getTabs().add(root2);
+        
         
         //Object ottc = loader2.getController();
         
