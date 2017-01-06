@@ -5,6 +5,7 @@
  */
 package model;
 
+import database.CRUD;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
@@ -19,9 +20,9 @@ import javafx.beans.property.StringProperty;
  * @author dusan
  */
 public class Proizvod {
-    
+    CRUD crud = new CRUD();
     private IntegerProperty proizvod_id;
-    private IntegerProperty tip_id;
+    private StringProperty tip_id;
     private DoubleProperty proizvod_cena;
     private IntegerProperty proizvod_kolicina;
     private StringProperty proizvod_naziv;
@@ -29,7 +30,7 @@ public class Proizvod {
 
     public Proizvod(int proizvod_id, int tip_id, double proizvod_cena, int proizvod_kolicina, String proizvod_naziv) {
         this.proizvod_id = new SimpleIntegerProperty(proizvod_id);
-        this.tip_id = new SimpleIntegerProperty(tip_id);
+        this.tip_id = new SimpleStringProperty(crud.findNazivByIdInTipProizvoda(tip_id));
         this.proizvod_cena = new SimpleDoubleProperty(proizvod_cena);
         this.proizvod_kolicina = new SimpleIntegerProperty(proizvod_kolicina);
         this.proizvod_naziv = new SimpleStringProperty(proizvod_naziv);
@@ -40,7 +41,7 @@ public class Proizvod {
         return proizvod_id;
     }
     
-    public IntegerProperty tipIdProperty(){
+    public StringProperty tipIdProperty(){
         return tip_id;
     }
     
@@ -69,11 +70,11 @@ public class Proizvod {
         this.proizvod_id.set(proizvod_id);
     }
 
-    public int getTip_id() {
+    public String getTip_id() {
         return tip_id.get();
     }
 
-    public void setTip_id(int tip_id) {
+    public void setTip_id(String tip_id) {
         this.tip_id.set(tip_id);
     }
 

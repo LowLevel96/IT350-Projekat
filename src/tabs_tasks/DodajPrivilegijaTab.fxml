@@ -19,7 +19,7 @@
                <columns>
                     <TableColumn fx:id="checkBoxTableColumn" maxWidth="34.0" minWidth="26.0" prefWidth="34.0" resizable="false" sortable="false">
                         <cellValueFactory><PropertyValueFactory property="taskcheck" /></cellValueFactory>
-                        <cellFactory><model.CheckBoxCellFactory /></cellFactory>
+                        <cellFactory><model.CheckBoxDodajPrivilegija /></cellFactory>
                     </TableColumn>   
                   <TableColumn fx:id="tableColumnId" prefWidth="75.0" text="Id" />
                   <TableColumn fx:id="tableColumnNaziv" prefWidth="265.0" text="Naziv Funkcionalnosti" />

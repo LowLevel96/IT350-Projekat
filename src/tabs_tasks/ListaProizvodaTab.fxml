@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<Tab text="Lista proizvoda" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tabs_controll.ListaProizvodaController">
+   <content>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <TableView fx:id="tableViewLista" layoutX="-2.0" layoutY="101.0" prefHeight="763.0" prefWidth="1206.0">
+               <columns>
+                  <TableColumn fx:id="tableColumCheck" prefWidth="99.0">
+                      <cellValueFactory><PropertyValueFactory property="proizvod_check" /></cellValueFactory>
+                      <cellFactory><model.CheckBoxListaProizvoda /></cellFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="tableColumnId" prefWidth="99.0" text="Id" />
+                  <TableColumn fx:id="tableColumnTip" prefWidth="257.0" text="Tip Proizvoda" />
+                  <TableColumn fx:id="tableColumnCena" prefWidth="204.0" text="Cena" />
+                  <TableColumn fx:id="tableColumnKolicina" prefWidth="226.0" text="Kolicina" />
+                  <TableColumn fx:id="tableColumnNaziv" prefWidth="419.0" text="Naziv" />
+               </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+   </content>
+</Tab>

@@ -6,7 +6,6 @@
 package model;
 
 import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.util.Callback;
 
@@ -14,11 +13,11 @@ import javafx.util.Callback;
  *
  * @author dusan
  */
-public class CheckBoxCellFactory implements Callback{
+public class CheckBoxListaProizvoda implements Callback{
 
     @Override
     public TableCell call(Object param) {
-        CheckBoxTableCell<TaskModel,Boolean> checkBoxCell = new CheckBoxTableCell<>();
+        CheckBoxTableCell<Proizvod,Boolean> checkBoxCell = new CheckBoxTableCell<>();
         return checkBoxCell;
     }
     

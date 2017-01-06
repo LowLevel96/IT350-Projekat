@@ -6,6 +6,7 @@
 package database;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -154,6 +155,23 @@ public class CRUD {
             Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
+    }
+    
+    public String findNazivByIdInTipProizvoda(int tip_id){
+        try {
+            String sql = "SELECT tip_ime FROM tipproizvoda WHERE tip_id=?";
+
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, tip_id);
+
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()){
+                return rs.getString("tip_ime");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
     
     public int findByNazivInPrivilegija(String privilegija_naziv){
@@ -502,5 +520,51 @@ public class CRUD {
         
         return null;
     }
+    
+      
+    //insertIntoProdaja!!
+    public String insertIntoProdaja(int zaposleni_id,int kasa_id,int prodaja_kolicina,double prodaja_cena,Date prodaja_datum,double prodaja_porez, ArrayList<Integer> lista_proizvoda){
+        try {
+                 String sql = "INSERT INTO prodaja (zaposleni_id, kasa_id, prodaja_kolicina, prodaja_cena,prodaja_datum,prodaja_porez) VALUES (?, ?, ?, ?, ?, ?)";
+
+                 PreparedStatement statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                 statement.setInt(1,zaposleni_id);
+                 statement.setInt(2, kasa_id);
+                 statement.setInt(3, prodaja_kolicina);
+                 statement.setDouble(4, prodaja_cena);
+                 statement.setDate(5, prodaja_datum);
+                 statement.setDouble(6, prodaja_porez);
+                 
+
+                 int rowsInserted = statement.executeUpdate();
+                 if (rowsInserted > 0) {
+                     ResultSet row_id = statement.getGeneratedKeys();
+                     for (Iterator<Integer> iterator = lista_proizvoda.iterator(); iterator.hasNext();) {
+                         Integer next = iterator.next();
+                         insertIntoProdajaLista(next, row_id.getInt(1));
+                     }
+                 }
+            } catch (SQLException ex) {
+                 Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+        return "Doslo je do greske, molimo pokusajte ponovo";
+    }
+
+    //insertIntoProdajaLista
+    public void insertIntoProdajaLista(int proizvod_id, int prodaja_id){
+        try {
+                 String sql = "INSERT INTO prodajalista (proizvod_id,prodaja_id) VALUES (?, ?)";
+
+                 PreparedStatement statement = con.prepareStatement(sql);
+                 statement.setInt(1, proizvod_id);
+                 statement.setInt(2, prodaja_id);
+
+                 int rowsInserted = statement.executeUpdate();
+            } catch (SQLException ex) {
+                 Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
+
     
 }
