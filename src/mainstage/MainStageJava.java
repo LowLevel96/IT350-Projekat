@@ -89,7 +89,9 @@ public class MainStageJava extends Application {
         root2 = loader2.load();
         root.getTabs().add(root2);
         
-        
+        loader2 = new FXMLLoader(getClass().getResource("/tabs_tasks/StanjeMagacinaTab.fxml"));
+        root2 = loader2.load();
+        root.getTabs().add(root2);
         
         
         //Object ottc = loader2.getController();
@@ -104,7 +106,7 @@ public class MainStageJava extends Application {
         
         
         primaryStage.setTitle("Welcome " + name + ", Kasa broj: " + broj_kasa);
-        primaryStage.setScene(new Scene(root,600,400));
+        primaryStage.setScene(new Scene(root,1200,900));
         primaryStage.show();
         
     }
