@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -566,5 +567,62 @@ public class CRUD {
             }
     }
 
+    public int findKolicinaInProizvodById(int id){
+        try {
+             String sql = "SELECT proizvod_kolicina FROM proizvod WHERE proizvod_id=?";
+
+             PreparedStatement statement = con.prepareStatement(sql);
+             statement.setInt(1, id);
+
+             ResultSet rs = statement.executeQuery();
+             if(rs.next()){
+                 return rs.getInt("proizvod_kolicina");
+             }
+
+        } catch (SQLException ex) {
+             Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }    
+    
+    public ObservableList<Proizvod> findSoldProizvodTodayInProdaja(){
+        ObservableList<Proizvod> data = FXCollections.observableArrayList();
+        try {
+            String sql = "SELECT * FROM prodaja WHERE prodaja_datum=?";
+
+            PreparedStatement statement = con.prepareStatement(sql);
+            
+            LocalDate today = LocalDate.now();
+            statement.setString(1, today.toString());
+            
+            ResultSet rs = statement.executeQuery();
+
+            while(rs.next()){
+                data.add(new Proizvod(rs.getInt("proizvod_id"), rs.getInt("tip_id"), rs.getDouble("proizvod_cena"), rs.getInt("proizvod_kolicina"), rs.getString("proizvod_naziv")));
+            }
+            return data;
+        } catch (SQLException ex) {
+            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
+    }
+    
+    public void updateKolicinaInProizvodById(int id, int kolicina){
+        try {
+            
+            String sql = "UPDATE proizvod SET proizvod_kolicina=? WHERE proizvod_id=?";
+            int newKolicina = findKolicinaInProizvodById(id) - kolicina;
+                 PreparedStatement statement = con.prepareStatement(sql);
+                 statement.setInt(1, newKolicina);
+                 statement.setInt(2, id);
+
+                 int rowsInserted = statement.executeUpdate();
+            } catch (SQLException ex) {
+            
+            }
+    }
+    
+    
     
 }

@@ -49,28 +49,27 @@ public class StanjeMagacinaController implements Initializable {
         ObservableList<Proizvod> listaProizvoda = crud.queryProizvod();
         
         ObservableList<Proizvod> withStanje = listaProizvoda.stream()
-                .filter(p -> p.getProizvod_kolicina() > 0)
+                .filter(p -> p.getProizvod_stanje() > 0)
                 .collect(Collectors.toCollection(FXCollections::observableArrayList));
         
         ObservableList<Proizvod> withoutStanje = listaProizvoda.stream()
-                .filter(p -> p.getProizvod_kolicina() == 0)
+                .filter(p -> p.getProizvod_stanje() == 0)
                 .collect(Collectors.toCollection(FXCollections::observableArrayList));
         
         tableViewWithStanje.setItems(withStanje);
         tableViewWithoutStanje.setItems(withoutStanje);
         
         tableColumnId.setCellValueFactory(new PropertyValueFactory<>("proizvod_id"));
-        tableColumnTip.setCellValueFactory(new PropertyValueFactory<>("proizvod_tip"));
+        tableColumnTip.setCellValueFactory(new PropertyValueFactory<>("tip_id"));
         tableColumnCena.setCellValueFactory(new PropertyValueFactory<>("proizvod_cena"));
-        tableColumnKolicina.setCellValueFactory(new PropertyValueFactory<>("proizvod_kolicina"));
+        tableColumnKolicina.setCellValueFactory(new PropertyValueFactory<>("proizvod_stanje"));
         tableColumnNaziv.setCellValueFactory(new PropertyValueFactory<>("proizvod_naziv"));
         
         tableColumnId2.setCellValueFactory(new PropertyValueFactory<>("proizvod_id"));
-        tableColumnTip2.setCellValueFactory(new PropertyValueFactory<>("proizvod_tip"));
+        tableColumnTip2.setCellValueFactory(new PropertyValueFactory<>("tip_id"));
         tableColumnCena2.setCellValueFactory(new PropertyValueFactory<>("proizvod_cena"));
-        tableColumnKolicina2.setCellValueFactory(new PropertyValueFactory<>("proizvod_kolicina"));
-        tableColumnNaziv2.setCellValueFactory(new PropertyValueFactory<>("proizvod_naziv"));
-        
-    }    
+        tableColumnKolicina2.setCellValueFactory(new PropertyValueFactory<>("proizvod_stanje"));
+        tableColumnNaziv2.setCellValueFactory(new PropertyValueFactory<>("proizvod_naziv"));    
+    }
     
 }

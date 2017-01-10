@@ -3,8 +3,8 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.AnchorPane?>
 
 <Tab text="Lista proizvoda" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tabs_controll.ListaProizvodaController">
    <content>
@@ -13,14 +13,26 @@
             <TableView fx:id="tableViewLista" layoutX="-2.0" layoutY="101.0" prefHeight="763.0" prefWidth="1206.0">
                <columns>
                   <TableColumn fx:id="tableColumCheck" prefWidth="99.0">
-                      <cellValueFactory><PropertyValueFactory property="proizvod_check" /></cellValueFactory>
-                      <cellFactory><model.CheckBoxListaProizvoda /></cellFactory>
+                     <cellValueFactory>
+                        <PropertyValueFactory property="proizvod_check" />
+                     </cellValueFactory>
+                     <cellFactory>
+                        <model.CheckBoxListaProizvoda />
+                     </cellFactory>
                   </TableColumn>
                   <TableColumn fx:id="tableColumnId" prefWidth="99.0" text="Id" />
                   <TableColumn fx:id="tableColumnTip" prefWidth="257.0" text="Tip Proizvoda" />
-                  <TableColumn fx:id="tableColumnCena" prefWidth="204.0" text="Cena" />
-                  <TableColumn fx:id="tableColumnKolicina" prefWidth="226.0" text="Kolicina" />
-                  <TableColumn fx:id="tableColumnNaziv" prefWidth="419.0" text="Naziv" />
+                  <TableColumn fx:id="tableColumnCena" prefWidth="252.0" text="Cena" />
+                  <TableColumn fx:id="tableColumnStanje" prefWidth="129.0" text="Stanje" />
+                  <TableColumn fx:id="tableColumnKolicina" prefWidth="103.0" text="Kolicina">
+                      <cellValueFactory>
+                        <PropertyValueFactory property="proizvod_kolicina" />
+                     </cellValueFactory>
+                     <cellFactory>
+                        <model.TextFieldListaProizvoda />
+                     </cellFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="tableColumnNaziv" maxWidth="289.0" prefWidth="266.0" text="Naziv" />
                </columns>
             </TableView>
          </children>

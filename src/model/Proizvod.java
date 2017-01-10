@@ -23,16 +23,20 @@ public class Proizvod {
     CRUD crud = new CRUD();
     private IntegerProperty proizvod_id;
     private StringProperty tip_id;
+    private IntegerProperty tip_id_integer;
     private DoubleProperty proizvod_cena;
-    private IntegerProperty proizvod_kolicina;
+    private IntegerProperty proizvod_stanje;
+    private StringProperty proizvod_kolicina;
     private StringProperty proizvod_naziv;
     private BooleanProperty proizvod_check = new SimpleBooleanProperty(false);
 
     public Proizvod(int proizvod_id, int tip_id, double proizvod_cena, int proizvod_kolicina, String proizvod_naziv) {
         this.proizvod_id = new SimpleIntegerProperty(proizvod_id);
         this.tip_id = new SimpleStringProperty(crud.findNazivByIdInTipProizvoda(tip_id));
+        this.tip_id_integer = new SimpleIntegerProperty(tip_id);
         this.proizvod_cena = new SimpleDoubleProperty(proizvod_cena);
-        this.proizvod_kolicina = new SimpleIntegerProperty(proizvod_kolicina);
+        this.proizvod_kolicina = new SimpleStringProperty(""+0);
+        this.proizvod_stanje= new SimpleIntegerProperty(proizvod_kolicina);
         this.proizvod_naziv = new SimpleStringProperty(proizvod_naziv);
     }
 
@@ -45,12 +49,20 @@ public class Proizvod {
         return tip_id;
     }
     
+    public IntegerProperty tipIdIntegerProperty(){
+        return tip_id_integer;
+    }
+    
     public DoubleProperty proizvodCenaProperty(){
         return proizvod_cena;
     }
     
-    public IntegerProperty proizvodKolicinaProperty(){
+    public StringProperty proizvodKolicinaProperty(){
         return proizvod_kolicina;
+    }
+    
+    public IntegerProperty proizvodStanjeProperty(){
+        return proizvod_stanje;
     }
     
     public StringProperty proizvodNazivProperty(){
@@ -86,11 +98,19 @@ public class Proizvod {
         this.proizvod_cena.set(proizvod_cena);
     }
 
-    public int getProizvod_kolicina() {
-        return proizvod_kolicina.get();
+    public int getProizvod_stanje() {
+        return proizvod_stanje.get();
     }
 
-    public void setProizvod_kolicina(int proizvod_kolicina) {
+    public void setProizvod_stanje(int proizvod_stanje) {
+        this.proizvod_stanje.set(proizvod_stanje);
+    }
+    
+    public String getProizvod_kolicina(){
+        return this.proizvod_kolicina.get();
+    }
+    
+    public void setProizvod_kolicina(String proizvod_kolicina){
         this.proizvod_kolicina.set(proizvod_kolicina);
     }
 
@@ -110,6 +130,6 @@ public class Proizvod {
         return proizvod_check.get();
     }
     
-    
-    
+       
 }
+

@@ -17,7 +17,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import static javafx.scene.input.KeyCode.T;
+import javafx.util.StringConverter;
 import model.Proizvod;
+import model.TextFieldListaProizvoda;
 
 /**
  * FXML Controller class
@@ -33,6 +37,7 @@ public class ListaProizvodaController implements Initializable {
     @FXML private TableColumn<Proizvod, Integer> tableColumnId;
     @FXML private TableColumn<Proizvod, String> tableColumnTip;
     @FXML private TableColumn<Proizvod, Double> tableColumnCena;
+    @FXML private TableColumn<Proizvod, Integer> tableColumnStanje;
     @FXML private TableColumn<Proizvod, Integer> tableColumnKolicina;
     @FXML private TableColumn<Proizvod, String> tableColumnNaziv;
     
@@ -44,17 +49,28 @@ public class ListaProizvodaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         ObservableList<Proizvod> listaProizvoda = crud.queryProizvod();
-        listaProizvoda = listaProizvoda.stream().filter(p -> p.getProizvod_kolicina() > 0).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        listaProizvoda = listaProizvoda.stream().filter(p -> p.getProizvod_stanje() > 0).collect(Collectors.toCollection(FXCollections::observableArrayList));
         tableViewLista.setItems(listaProizvoda);
+        
+        tableViewLista.setEditable(true);
         
         tableColumnId.setCellValueFactory(new PropertyValueFactory("proizvod_id"));
         tableColumnTip.setCellValueFactory(new PropertyValueFactory("tip_id"));
         tableColumnCena.setCellValueFactory(new PropertyValueFactory("proizvod_cena"));
+        tableColumnStanje.setCellValueFactory(new PropertyValueFactory("proizvod_stanje"));
         tableColumnKolicina.setCellValueFactory(new PropertyValueFactory("proizvod_kolicina"));
         tableColumnNaziv.setCellValueFactory(new PropertyValueFactory("proizvod_naziv"));
         
-        tableViewLista.setEditable(true);
-        //tableColumnCheck.setEditable(true);
-    }    
-    
-}
+        tableColumnKolicina.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<String>() {
+            @Override
+            public String toString(String object) {
+                 return object.toString();
+            }
+
+            @Override
+            public String fromString(String string) {
+                return (String) string;
+            }
+        }));
+    }
+    }
