@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<Tab text="Dnevni Izvestaj" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tabs_controll.DnevniIzvestajController">
+   <content>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <TableView fx:id="tableViewProdaja" layoutY="39.0" prefHeight="246.0" prefWidth="1200.0">
+               <columns>
+                  <TableColumn fx:id="tableColumnProdajaId" prefWidth="139.0" text="Id" />
+                  <TableColumn fx:id="tableColumnProdajaZaposleni" prefWidth="185.0" text="Zaposleni" />
+                  <TableColumn fx:id="tableColumnProdajaKasa" prefWidth="157.0" text="Kasa Id" />
+                  <TableColumn fx:id="tableColumnProdajaKolicina" prefWidth="179.0" text="Kolicina" />
+                  <TableColumn fx:id="tableColumnProdajaCena" prefWidth="177.0" text="Cena" />
+                  <TableColumn fx:id="tableColumnProdajaDatum" prefWidth="236.0" text="Datum" />
+                  <TableColumn fx:id="tableColumnProdajaPorez" prefWidth="126.0" text="Porez" />
+               </columns>
+            </TableView>
+            <TableView fx:id="tableViewNabavka" layoutY="389.0" prefHeight="307.0" prefWidth="1200.0">
+               <columns>
+                  <TableColumn fx:id="tableColumnNabavkaId" prefWidth="221.0" text="Id" />
+                  <TableColumn fx:id="tableColumnNabavkaNabavljac" prefWidth="476.0" text="Nabavljac" />
+                  <TableColumn fx:id="tableColumnNabavkaKolicina" prefWidth="200.0" text="Kolicina" />
+                  <TableColumn fx:id="tableColumnNabavkaDatum" prefWidth="298.0" text="Datum" />
+               </columns>
+            </TableView>
+            <Label layoutX="560.0" layoutY="4.0" text="Prodaja">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="560.0" layoutY="353.0" text="Nabavka">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Line endX="1200.0" layoutY="340.0" />
+            <Label layoutX="909.0" layoutY="294.0" text="Ukupno: ">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelProdajaUkupno" layoutX="1014.0" layoutY="296.0">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <Label layoutX="912.0" layoutY="713.0" text="Ukupno:">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelNabavkaUkupno" layoutX="1014.0" layoutY="715.0">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <Line endX="1200.0" layoutY="760.0" />
+            <Label layoutX="58.0" layoutY="793.0" text="Ukupna vrednost stanja:" textFill="#1e8029">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelUkupno" layoutX="346.0" layoutY="796.0">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </content>
+</Tab>

@@ -7,6 +7,9 @@ package tabs_controll;
 
 import database.CRUD;
 import java.net.URL;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -14,14 +17,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import static javafx.scene.input.KeyCode.T;
 import javafx.util.StringConverter;
+import login.UserFactory;
 import model.Proizvod;
 import model.TextFieldListaProizvoda;
+import register_computer.RegisterFile;
 
 /**
  * FXML Controller class
@@ -52,25 +58,51 @@ public class ListaProizvodaController implements Initializable {
         listaProizvoda = listaProizvoda.stream().filter(p -> p.getProizvod_stanje() > 0).collect(Collectors.toCollection(FXCollections::observableArrayList));
         tableViewLista.setItems(listaProizvoda);
         
+        tableViewLista.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tableViewLista.getSelectionModel().setCellSelectionEnabled(true);
+        
         tableViewLista.setEditable(true);
         
         tableColumnId.setCellValueFactory(new PropertyValueFactory("proizvod_id"));
         tableColumnTip.setCellValueFactory(new PropertyValueFactory("tip_id"));
         tableColumnCena.setCellValueFactory(new PropertyValueFactory("proizvod_cena"));
         tableColumnStanje.setCellValueFactory(new PropertyValueFactory("proizvod_stanje"));
-        tableColumnKolicina.setCellValueFactory(new PropertyValueFactory("proizvod_kolicina"));
+        //tableColumnKolicina.setCellValueFactory(new PropertyValueFactory("proizvod_kolicina"));
         tableColumnNaziv.setCellValueFactory(new PropertyValueFactory("proizvod_naziv"));
+       
+    }
+    
+    @FXML
+    public void stampajRacun(){
         
-        tableColumnKolicina.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<String>() {
-            @Override
-            public String toString(String object) {
-                 return object.toString();
+        ArrayList<Proizvod> lista = new ArrayList<>();
+        for(Proizvod proizvod : tableViewLista.getItems()){
+            if(proizvod.getProizvodcheck()){
+                System.out.println(proizvod.getProizvod_naziv());
+                lista.add(proizvod);
             }
-
-            @Override
-            public String fromString(String string) {
-                return (String) string;
-            }
-        }));
+        }
+        
+        ArrayList<Integer> lista_id = new ArrayList<>();
+        double prodaja_cena = 0;
+        for(Proizvod id : lista) {
+            lista_id.add(id.getProizvod_id());
+            prodaja_cena += id.getProizvod_cena();
+        }
+        
+        int kasa_id = Integer.parseInt(new RegisterFile().readFromFile());
+        int zaposleni_id = UserFactory.getInstance().getUser().getId();
+        int prodaja_kolicina = lista.size();
+        String prodaja_datum = LocalDate.now().toString();
+        
+        Date prodaja_datum2 = Date.valueOf(prodaja_datum);
+        double prodaja_porez = prodaja_cena * 0.2;
+        
+        
+        System.out.println(crud.insertIntoProdaja(zaposleni_id, kasa_id, prodaja_kolicina, prodaja_cena, prodaja_datum2, prodaja_porez, lista));        
+        
+        //int zaposleni_id,int kasa_id,int prodaja_kolicina,double prodaja_cena,Date prodaja_datum,double prodaja_porez, ArrayList<Integer> lista_proizvoda
     }
-    }
+    
+    
+}

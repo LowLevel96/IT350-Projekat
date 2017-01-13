@@ -77,10 +77,8 @@ public class DodajPrivilegijaController implements Initializable {
             if(task.getTaskcheck()){
                 list.add(task);
             }
-        }
-        
+        }   
         crud.insertInPrivilegija(txtNaziv.getText(), txtOpis.getText(), list);
-
     }
     
 }

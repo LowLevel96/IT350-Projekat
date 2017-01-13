@@ -79,10 +79,11 @@ public class LoginFXMLController implements Initializable {
         if(!isEmpty(email, password)){
             int zaposleni_id = crud.verifyUser(email ,password);
             if(zaposleni_id != 0){
-                UserFactory userFactory = new UserFactory(crud.findUserById(zaposleni_id));
+                UserFactory userFactory = UserFactory.getInstance();
+                userFactory.setUser(crud.findUserById(zaposleni_id));
                 //System.out.println(userFactory.getId() + "\n" + userFactory.getName() + "\n" + userFactory.getLastname());
                 //System.out.println(userFactory.getTasks_list());
-                MainStageJava msj = new MainStageJava(userFactory.getId(), userFactory.getName(), userFactory.getLastname(), userFactory.getTasks_list());
+                MainStageJava msj = new MainStageJava(userFactory.getUser().getId(), userFactory.getUser().getIme(), userFactory.getUser().getPrezime(), userFactory.getUser().getLista());
                 try {
                     msj.start(new Stage());
                 } catch (Exception ex) {

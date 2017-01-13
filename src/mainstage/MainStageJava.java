@@ -9,6 +9,7 @@ import database.CRUD;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,6 +17,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.TaskModel;
 import register_computer.RegisterFile;
 
 /**
@@ -29,34 +31,32 @@ public class MainStageJava extends Application {
     private int id;
     private String name;
     private String lastname;
-    private ArrayList<Tab> list;
+    private ObservableList<TaskModel> list;
     private String broj_kasa = new RegisterFile().readFromFile();
     
     @Override
     public void start(Stage primaryStage) throws Exception {
-
+        
         FXMLLoader loader = new FXMLLoader(getClass().getResource(
                "MainStage.fxml"));
         TabPane root =  loader.load();
         MainStageController msc = loader.getController();
         
         
-        ArrayList<Integer> listaTaskova = new ArrayList<>();
-        listaTaskova.add(1);
-        listaTaskova.add(3);
-        listaTaskova.add(7);
+//        ArrayList<Integer> listaTaskova = new ArrayList<>();
+//        listaTaskova.add(1);
+//        listaTaskova.add(3);
+//        listaTaskova.add(7);
         FXMLLoader loader2;
-        for (Iterator<Integer> iterator = listaTaskova.iterator(); iterator.hasNext();) {
-            Integer next = iterator.next();
-            String task_naziv = crud.findFileByTaskIdInPrivilegijaLista(next);
-            loader2 = new FXMLLoader(getClass().getResource("/tabs_tasks/" + task_naziv));
-            Tab root2 =  loader2.load();
-            root.getTabs().add(root2);
-            
-        }
+//        for (Iterator<TaskModel> iterator = list.iterator(); iterator.hasNext();) {
+//            TaskModel next = iterator.next();
+//            loader2 = new FXMLLoader(getClass().getResource("/tabs_tasks/" + next.getTask_file()));
+//            Tab root2 =  loader2.load();
+//            root.getTabs().add(root2);
+//            
+//        }
         
-       
-        
+        /*
         loader2 = new FXMLLoader(getClass().getResource("/tabs_tasks/AddUserTab.fxml"));
         Tab root2 =  loader2.load();
         root.getTabs().add(root2);
@@ -92,9 +92,13 @@ public class MainStageJava extends Application {
         loader2 = new FXMLLoader(getClass().getResource("/tabs_tasks/StanjeMagacinaTab.fxml"));
         root2 = loader2.load();
         root.getTabs().add(root2);
-        
-        loader2 = new FXMLLoader(getClass().getResource("/tabs_tasks/ListaProizvodaTab.fxml"));
-        root2 = loader2.load();
+       */
+//        loader2 = new FXMLLoader(getClass().getResource("/tabs_tasks/ListaProizvodaTab.fxml"));
+//        Tab root2 = loader2.load();
+//        root.getTabs().add(root2);
+////        
+        loader2 = new FXMLLoader(getClass().getResource("/tabs_tasks/DnevniIzvestajTab.fxml"));
+        Tab root2 = loader2.load();
         root.getTabs().add(root2);
         
         
@@ -115,16 +119,25 @@ public class MainStageJava extends Application {
         
     }
 
-//    public MainStageJava(int id, String name, String lastname, ArrayList<Tab> list) {
+//    public MainStageJava(int id, String name, String lastname, ObservableList<TaskModel> list) {
 //        this.id = id;
 //        this.name = name;
 //        this.lastname = lastname;
 //        this.list = list;
-//   
 //    }
 
     public static void main(String[] args) {
         launch(args);
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+     
     
 }

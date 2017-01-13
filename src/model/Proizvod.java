@@ -28,14 +28,14 @@ public class Proizvod {
     private IntegerProperty proizvod_stanje;
     private StringProperty proizvod_kolicina;
     private StringProperty proizvod_naziv;
-    private BooleanProperty proizvod_check = new SimpleBooleanProperty(false);
+    private SimpleBooleanProperty proizvodcheck = new SimpleBooleanProperty(false);
 
     public Proizvod(int proizvod_id, int tip_id, double proizvod_cena, int proizvod_kolicina, String proizvod_naziv) {
         this.proizvod_id = new SimpleIntegerProperty(proizvod_id);
         this.tip_id = new SimpleStringProperty(crud.findNazivByIdInTipProizvoda(tip_id));
         this.tip_id_integer = new SimpleIntegerProperty(tip_id);
         this.proizvod_cena = new SimpleDoubleProperty(proizvod_cena);
-        this.proizvod_kolicina = new SimpleStringProperty(""+0);
+        this.proizvod_kolicina = new SimpleStringProperty(""+1);
         this.proizvod_stanje= new SimpleIntegerProperty(proizvod_kolicina);
         this.proizvod_naziv = new SimpleStringProperty(proizvod_naziv);
     }
@@ -69,8 +69,8 @@ public class Proizvod {
         return proizvod_naziv;
     }
     
-    public BooleanProperty proizvodCheckProperty(){
-        return proizvod_check;
+    public SimpleBooleanProperty proizvodcheckProperty(){
+        return proizvodcheck;
     }
     
     // Getters and Setters
@@ -122,13 +122,14 @@ public class Proizvod {
         this.proizvod_naziv.set(proizvod_naziv);
     }
     
-    public void setProizvod_check(Boolean proizvod_check){
-        this.proizvod_check.set(proizvod_check);
+    public void setProizvodcheck(Boolean proizvod_check){
+        this.proizvodcheck.set(proizvod_check);
     }
     
-    public Boolean getProizvod_check(){
-        return proizvod_check.get();
+    public Boolean getProizvodcheck(){
+        return proizvodcheck.get();
     }
+    
     
        
 }

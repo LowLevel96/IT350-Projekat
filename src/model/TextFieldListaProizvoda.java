@@ -16,9 +16,8 @@ import javafx.util.Callback;
 public class TextFieldListaProizvoda implements Callback{
 
     @Override
-    public TextFieldTableCell call(Object param) {
+    public TextFieldTableCell call(Object param){
         TextFieldTableCell<Proizvod, String> textFieldCell = new TextFieldTableCell<>();
         return textFieldCell;
     }
-    
 }

@@ -22,7 +22,9 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Tab;
 import model.User;
 import model.Kasa;
+import model.Nabavka;
 import model.Privilegija;
+import model.Prodaja;
 import model.ProdajniObjekat;
 import model.Proizvod;
 import model.TaskModel;
@@ -262,7 +264,43 @@ public class CRUD {
                 String state = rs.getString("zaposleni_opstina");
                 String city = rs.getString("zaposleni_grad");
                 String street = rs.getString("zaposleni_ulica");
-                return new User(user_id, privilegija_id, name, lastname, email, state, city, street);
+                return new User(user_id, privilegija_id, name, lastname, email, state, city, street, findTaskListaInPrivilegijaListaById(privilegija_id));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    public ObservableList<TaskModel> findTaskListaInPrivilegijaListaById(int tip_id){
+        ObservableList<TaskModel> data = FXCollections.observableArrayList();
+        try {
+            String sql = "SELECT task_id FROM privilegijalista WHERE privilegija_id=?";
+
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, tip_id);
+
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()){
+                data.add(findTaskById(rs.getInt("task_id")));
+            }
+            return data;
+        } catch (SQLException ex) {
+            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    public TaskModel findTaskById(int task_id){
+        try {
+            String sql = "SELECT * FROM task WHERE task_id=?";
+
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, task_id);
+
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()){
+               return new TaskModel(rs.getInt("task_id"), rs.getString("task_naziv"), rs.getString("task_fajl"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
@@ -429,7 +467,7 @@ public class CRUD {
                 String grad = rs.getString("zaposleni_grad");
                 String ulica = rs.getString("zaposleni_ulica");
                 
-                data.add(new User(id, privilegija, ime, prezime, email, opstina, grad, ulica));
+                data.add(new User(id, privilegija, ime, prezime, email, opstina, grad, ulica, null));
             }
             return data;
         } catch (SQLException ex) {
@@ -522,9 +560,26 @@ public class CRUD {
         return null;
     }
     
-      
+        public ObservableList<Nabavka> queryNabavka() {
+            ObservableList<Nabavka> data = FXCollections.observableArrayList();
+            try {
+            String sql = "SELECT * FROM nabavka";
+                PreparedStatement statement = con.prepareStatement(sql);
+
+                ResultSet rs = statement.executeQuery();
+                while (rs.next()) {
+                    data.add(new Nabavka(rs.getInt("nabavka_id"), rs.getInt("nabavljac_id"), rs.getInt("nabavka_kolicina"), rs.getString("nabavka_datum")));
+                }
+                return data;
+            } catch (SQLException ex) {
+                Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            return null;
+        }
+
     //insertIntoProdaja!!
-    public String insertIntoProdaja(int zaposleni_id,int kasa_id,int prodaja_kolicina,double prodaja_cena,Date prodaja_datum,double prodaja_porez, ArrayList<Integer> lista_proizvoda){
+    public String insertIntoProdaja(int zaposleni_id,int kasa_id,int prodaja_kolicina,double prodaja_cena,Date prodaja_datum,double prodaja_porez, ArrayList<Proizvod> lista_proizvoda){
         try {
                  String sql = "INSERT INTO prodaja (zaposleni_id, kasa_id, prodaja_kolicina, prodaja_cena,prodaja_datum,prodaja_porez) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -540,9 +595,12 @@ public class CRUD {
                  int rowsInserted = statement.executeUpdate();
                  if (rowsInserted > 0) {
                      ResultSet row_id = statement.getGeneratedKeys();
-                     for (Iterator<Integer> iterator = lista_proizvoda.iterator(); iterator.hasNext();) {
-                         Integer next = iterator.next();
-                         insertIntoProdajaLista(next, row_id.getInt(1));
+                     if(row_id.next()){
+                        for (Iterator<Proizvod> iterator = lista_proizvoda.iterator(); iterator.hasNext();) {
+                            Proizvod next = iterator.next();
+                            insertIntoProdajaLista(next.getProizvod_id(), row_id.getInt(1));
+                        }
+                        return "Uspesno dodavanje!";
                      }
                  }
             } catch (SQLException ex) {
@@ -585,8 +643,8 @@ public class CRUD {
         return 0;
     }    
     
-    public ObservableList<Proizvod> findSoldProizvodTodayInProdaja(){
-        ObservableList<Proizvod> data = FXCollections.observableArrayList();
+    public ObservableList<Prodaja> queryProdajaToday(){
+        ObservableList<Prodaja> data = FXCollections.observableArrayList();
         try {
             String sql = "SELECT * FROM prodaja WHERE prodaja_datum=?";
 
@@ -596,11 +654,52 @@ public class CRUD {
             statement.setString(1, today.toString());
             
             ResultSet rs = statement.executeQuery();
-
+            
             while(rs.next()){
-                data.add(new Proizvod(rs.getInt("proizvod_id"), rs.getInt("tip_id"), rs.getDouble("proizvod_cena"), rs.getInt("proizvod_kolicina"), rs.getString("proizvod_naziv")));
+                data.add(new Prodaja(rs.getInt("prodaja_id"), rs.getInt("zaposleni_id"), rs.getInt("kasa_id"), rs.getInt("prodaja_kolicina"), rs.getDouble("prodaja_cena"), rs.getString("prodaja_datum"), rs.getDouble("prodaja_porez")));
             }
             return data;
+        } catch (SQLException ex) {
+            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
+    }
+    
+    public String findUkupnoInProdajaForToday(){
+        try {
+            String sql = "SELECT SUM(PRODAJA_CENA) AS ukupno FROM prodaja WHERE PRODAJA_DATUM=?";
+
+            PreparedStatement statement = con.prepareStatement(sql);
+            
+            LocalDate today = LocalDate.now();
+            statement.setString(1, today.toString());
+            
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()){
+                return ""+rs.getString("ukupno");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
+    }
+    
+    public Proizvod findProizvodById(int proizvod_id){
+        try {
+            String sql = "SELECT * FROM proizvod WHERE proizvod_id=?";
+
+            PreparedStatement statement = con.prepareStatement(sql);
+            
+            LocalDate today = LocalDate.now();
+            statement.setInt(1, proizvod_id);
+            
+            ResultSet rs = statement.executeQuery();
+
+            while(rs.next()){
+                return new Proizvod(rs.getInt("proizvod_id"), rs.getInt("tip_id"), rs.getDouble("proizvod_cena"), rs.getInt("proizvod_kolicina"), rs.getString("proizvod_naziv"));
+            }
         } catch (SQLException ex) {
             Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -621,6 +720,27 @@ public class CRUD {
             } catch (SQLException ex) {
             
             }
+    }
+    
+    public String findZaposleniImeById(int zaposleni_id){
+         try {
+            String sql = "SELECT zaposleni_ime, zaposleni_prezime FROM zaposleni WHERE zaposleni_id=?";
+
+            PreparedStatement statement = con.prepareStatement(sql);
+            
+            LocalDate today = LocalDate.now();
+            statement.setInt(1, zaposleni_id);
+            
+            ResultSet rs = statement.executeQuery();
+
+            while(rs.next()){
+                return rs.getString("zaposleni_ime") + " " + rs.getString("zaposleni_prezime");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
     }
     
     

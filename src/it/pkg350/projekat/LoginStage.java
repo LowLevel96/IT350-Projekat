@@ -23,15 +23,16 @@ public class LoginStage extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
         
-        LoginStage.classStage = primaryStage;
+        classStage = primaryStage;
         
         Parent root = FXMLLoader.load(getClass().getResource("/login/LoginFXML.fxml"));
         primaryStage.setTitle("Welcome to POS");
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
     }
-
+    
     public static void main(String[] args) {
         launch(args);
     }
+
 }

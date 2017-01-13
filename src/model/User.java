@@ -11,6 +11,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValueBase;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -29,9 +31,10 @@ public class User {
     private StringProperty grad;
     private StringProperty ulica;
     private StringProperty adresa;
+    private ObservableList<TaskModel> lista = FXCollections.observableArrayList();
     private int privilegija_idInteger;
 
-    public User(int id, int privilegija_id, String ime, String prezime, String email, String opstina, String grad, String ulica) {
+    public User(int id, int privilegija_id, String ime, String prezime, String email, String opstina, String grad, String ulica, ObservableList<TaskModel> lista) {
         this.id = new SimpleIntegerProperty(id);
         this.privilegija_id = new SimpleStringProperty(crud.findNazivByIdInPrivilegija(privilegija_id));
         this.ime2 = new SimpleStringProperty(ime);
@@ -42,6 +45,7 @@ public class User {
         this.ulica = new SimpleStringProperty(ulica);
         this.adresa = new SimpleStringProperty(opstina + ", " + grad + ", " + ulica);
         this.privilegija_idInteger = privilegija_id;
+        this.lista = lista;
     }
     
     // Properties
@@ -152,6 +156,14 @@ public class User {
     
     public String getAdresa(){
         return adresa.get();
+    }
+
+    public ObservableList<TaskModel> getLista() {
+        return lista;
+    }
+
+    public void setLista(ObservableList<TaskModel> lista) {
+        this.lista = lista;
     }
     
 }

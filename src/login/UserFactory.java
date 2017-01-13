@@ -7,7 +7,6 @@ package login;
 
 import model.User;
 import database.CRUD;
-import database.Task;
 import java.util.ArrayList;
 import javafx.scene.control.Tab;
 
@@ -17,59 +16,27 @@ import javafx.scene.control.Tab;
  */
 public class UserFactory {
     
-    private int id;
-    private String name;
-    private String lastname;
-    private int privilegija_id;
-    private ArrayList<String> tasks_list = new ArrayList<String>();
-    
-    public UserFactory(User user) {
-        this.name = user.getIme();
-        this.lastname = user.getPrezime();
-        this.id = user.getId();
-        this.privilegija_id = user.getPrivilegija_idIntger();
-        //this.tasks_list = getListOfTasksCRUD();
-    }
-    
-    private ArrayList<Tab> getListOfTasksCRUD(){
-        CRUD crud = new CRUD();
-        Task task = new Task();
-        
-        System.out.println(privilegija_id);
-        return task.deserializeTasks(privilegija_id);
+    private User user;
+    private static UserFactory instance = null;
+
+    private UserFactory() {
         
     }
-
-    public String getName() {
-        return name;
+    
+    public static UserFactory getInstance(){
+        if(instance == null){
+            instance = new UserFactory();
+        }
+        return instance;
     }
-
-    public void setName(String name) {
-        this.name = name;
+    
+    public void setUser(User user){
+        this.user = user;
     }
-
-    public String getLastname() {
-        return lastname;
+    
+    public User getUser(){
+        return this.user;
     }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public ArrayList<Tab> getTasks_list() {
-        return tasks_list;
-    }
-
-    public void setTasks_list(ArrayList<Tab> tasks_list) {
-        this.tasks_list = tasks_list;
-    }
+    
 
 }

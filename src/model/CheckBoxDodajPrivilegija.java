@@ -21,5 +21,4 @@ public class CheckBoxDodajPrivilegija implements Callback{
         CheckBoxTableCell<TaskModel,Boolean> checkBoxCell = new CheckBoxTableCell<>();
         return checkBoxCell;
     }
-    
 }
