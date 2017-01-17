@@ -45,13 +45,16 @@ public class DnevniIzvestajController implements Initializable {
     @FXML private TableColumn tableColumnNabavkaDatum;
     
     @FXML private Label labelProdajaUkupno;
+    @FXML private Label labelNabavkaUkupno;
+    @FXML private Label labelUkupno;
+    @FXML private Label labelUkupanPorez;
 /**
  * Initializes the controller class.
  */
 @Override
 public void initialize(URL url, ResourceBundle rb) {
 
-    ObservableList<Nabavka> nabavka = crud.queryNabavka();
+    ObservableList<Nabavka> nabavka = crud.queryNabavkaToday();
     ObservableList<Prodaja> prodaja = crud.queryProdajaToday();
     
     tableViewProdaja.setItems(prodaja);
@@ -71,7 +74,10 @@ public void initialize(URL url, ResourceBundle rb) {
     tableColumnNabavkaDatum.setCellValueFactory(new PropertyValueFactory<>("nabavka_datum"));
     
     labelProdajaUkupno.setText(crud.findUkupnoInProdajaForToday());
-    
+    labelNabavkaUkupno.setText(""+crud.findUkupnoInNabavkaToday());
+    double ukupno = crud.findUkupnoInProizvod();
+    labelUkupno.setText("" + ukupno);
+    labelUkupanPorez.setText("" + ukupno*0.2);
     // TODO
 } 
     

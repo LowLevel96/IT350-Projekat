@@ -6,13 +6,16 @@
 package database;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,9 +26,11 @@ import javafx.scene.control.Tab;
 import model.User;
 import model.Kasa;
 import model.Nabavka;
+import model.Nabavljac;
 import model.Privilegija;
 import model.Prodaja;
 import model.ProdajniObjekat;
+import model.ProdajniObjekatPrihod;
 import model.Proizvod;
 import model.TaskModel;
 import model.TipProizvoda;
@@ -308,26 +313,25 @@ public class CRUD {
         return null;
     }
     
-    public String insertIntoProizvod(int tip_id, String naziv, double cena){
+    public String insertIntoProizvod(int tip_id, String naziv, double kolicina, double cena){
         try {
-                 String sql = "INSERT INTO Proizvod (tip_id, proizvod_naziv, proizvod_cena, proizvod_kolicina) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Proizvod (tip_id, proizvod_naziv, proizvod_cena, proizvod_kolicina) VALUES (?, ?, ?, ?)";
+             PreparedStatement statement = con.prepareStatement(sql);
+             statement.setInt(1, tip_id);
+             statement.setString(2, naziv);
+             statement.setDouble(3, kolicina);
+             statement.setDouble(4, cena);
 
-                 PreparedStatement statement = con.prepareStatement(sql);
-                 statement.setInt(1, tip_id);
-                 statement.setString(2, naziv);
-                 statement.setDouble(3, cena);
-                 statement.setInt(4, 0);
+             int rowsInserted = statement.executeUpdate();
+             if (rowsInserted > 0) {
+                 return "Proizvod je dodat";
+             }
+        } catch (SQLException ex) {
+             Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-                 int rowsInserted = statement.executeUpdate();
-                 if (rowsInserted > 0) {
-                     return "Proizvod je dodat";
-                 }
-            } catch (SQLException ex) {
-                 Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        
-        return "Doslo je do greske, molimo pokusajte ponovo";
-    }
+    return "Doslo je do greske, molimo pokusajte ponovo";
+}
     
     public String insertIntoPrivilegija(String privilegija_naziv, String privilegija_opis){
         try {
@@ -577,9 +581,29 @@ public class CRUD {
 
             return null;
         }
+        
+        public ObservableList<Nabavka> queryNabavkaToday() {
+            ObservableList<Nabavka> data = FXCollections.observableArrayList();
+            try {
+            String sql = "SELECT * FROM nabavka WHERE nabavka_datum=?";
+                PreparedStatement statement = con.prepareStatement(sql);
+                LocalDate today = LocalDate.now();
+                statement.setString(1, today.toString());
+
+                ResultSet rs = statement.executeQuery();
+                while (rs.next()) {
+                    data.add(new Nabavka(rs.getInt("nabavka_id"), rs.getInt("nabavljac_id"), rs.getInt("nabavka_kolicina"), rs.getString("nabavka_datum")));
+                }
+                return data;
+            } catch (SQLException ex) {
+                Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            return null;
+        }
 
     //insertIntoProdaja!!
-    public String insertIntoProdaja(int zaposleni_id,int kasa_id,int prodaja_kolicina,double prodaja_cena,Date prodaja_datum,double prodaja_porez, ArrayList<Proizvod> lista_proizvoda){
+    public String insertIntoProdaja(int zaposleni_id,int kasa_id,int prodaja_kolicina,double prodaja_cena,String prodaja_datum,double prodaja_porez, ArrayList<Proizvod> lista_proizvoda){
         try {
                  String sql = "INSERT INTO prodaja (zaposleni_id, kasa_id, prodaja_kolicina, prodaja_cena,prodaja_datum,prodaja_porez) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -588,7 +612,7 @@ public class CRUD {
                  statement.setInt(2, kasa_id);
                  statement.setInt(3, prodaja_kolicina);
                  statement.setDouble(4, prodaja_cena);
-                 statement.setDate(5, prodaja_datum);
+                 statement.setString(5, prodaja_datum);
                  statement.setDouble(6, prodaja_porez);
                  
 
@@ -624,6 +648,36 @@ public class CRUD {
                  Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
             }
     }
+    
+    public int insertIntoNabavka(int nabavljac_id, int nabavka_kolicina, String nabavka_datum){
+        try {
+            
+            DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
+            Date startDate = df.parse(nabavka_datum);
+            
+                String sql = "INSERT INTO Nabavka (nabavljac_id, nabavka_kolicina, nabavka_datum) VALUES (?, ?, ?)";
+                PreparedStatement statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                 
+                 statement.setInt(1, nabavljac_id);
+                 statement.setInt(2, nabavka_kolicina);
+                 statement.setString(3, nabavka_datum);
+
+                 int rowsInserted = statement.executeUpdate();
+                 if (rowsInserted > 0) {
+                     ResultSet nabavka_id = statement.getGeneratedKeys();
+                     if(nabavka_id.next()){
+                        return nabavka_id.getInt(1);
+                     }
+                     
+                 }
+            } catch (SQLException ex) {
+                 Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return 0;
+    }
 
     public int findKolicinaInProizvodById(int id){
         try {
@@ -657,6 +711,26 @@ public class CRUD {
             
             while(rs.next()){
                 data.add(new Prodaja(rs.getInt("prodaja_id"), rs.getInt("zaposleni_id"), rs.getInt("kasa_id"), rs.getInt("prodaja_kolicina"), rs.getDouble("prodaja_cena"), rs.getString("prodaja_datum"), rs.getDouble("prodaja_porez")));
+            }
+            return data;
+        } catch (SQLException ex) {
+            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
+    }
+    
+    public ObservableList<Nabavljac> queryNabavljac(){
+        ObservableList<Nabavljac> data = FXCollections.observableArrayList();
+        try {
+            String sql = "SELECT * FROM nabavljac";
+
+            PreparedStatement statement = con.prepareStatement(sql);
+            
+            ResultSet rs = statement.executeQuery();
+            
+            while(rs.next()){
+                data.add(new Nabavljac(rs.getInt("nabavljac_id"), rs.getString("nabavljac_ime"), rs.getString("nabavljac_prezime"), rs.getString("nabavljac_email"), rs.getString("nabavljac_broj"), rs.getString("nabavljac_adresa")));
             }
             return data;
         } catch (SQLException ex) {
@@ -743,6 +817,171 @@ public class CRUD {
         return null;
     }
     
+//    public int naruceniProizvodiUdanu(String naziv){
+//        try {
+//        String sql = "";
+//                PreparedStatement statement = con.prepareStatement(sql);
+//                statement.setString(1, naziv);
+//
+//                ResultSet rs = statement.executeQuery();
+//                while(rs.next()){
+//                    return rs.getInt("proizvod_id");
+//                }
+//            } catch (SQLException ex) {
+//                Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        sreturn 0;
+//    }
+
+    public void insertIntoNabavkaLista(int proizvod_id, int nabavka_id) {
+        try {
+                 String sql = "INSERT INTO nabavkalista (proizvod_id, nabavka_id, nabavkalista_kolicina) VALUES (?, ?, ?)";
+
+                 PreparedStatement statement = con.prepareStatement(sql);
+                 statement.setInt(1, proizvod_id);
+                 statement.setInt(2, nabavka_id);
+                 statement.setInt(3, 5);
+
+                 int rowsInserted = statement.executeUpdate();
+            } catch (SQLException ex) {
+                 Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
+    
+    public double findUkupnoInProizvod(){
+        try {
+        String sql = "SELECT SUM(proizvod_cena*proizvod_kolicina) as 'Vrednost' FROM proizvod WHERE proizvod_kolicina > 0";
+        PreparedStatement statement = con.prepareStatement(sql);
+        //statement.setString(1, vrednost);
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()){
+                return rs.getDouble("Vrednost");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    return 0;
+    }
+    
+    public double findUkupnoInNabavkaToday(){
+        double sum = 0;
+        try {
+        String sql = "SELECT nabavka.NABAVKA_ID, nabavka.NABAVKA_KOLICINA,nabavkalista.NABAVKA_ID,nabavkalista.PROIZVOD_ID,proizvod.PROIZVOD_ID,proizvod.PROIZVOD_CENA,nabavka.NABAVKA_DATUM,SUM(proizvod.PROIZVOD_CENA*nabavkalista.NABAVKALISTA_KOLICINA) AS nabavka_ukupno FROM nabavka,nabavkalista,proizvod WHERE (proizvod.PROIZVOD_ID=nabavkalista.PROIZVOD_ID && nabavka.NABAVKA_ID=nabavkalista.NABAVKA_ID) AND nabavka.NABAVKA_DATUM = ? GROUP BY nabavkalista.PROIZVOD_ID, nabavka.NABAVKA_ID";
+        PreparedStatement statement = con.prepareStatement(sql);
+        LocalDate today = LocalDate.now();
+        statement.setString(1, today.toString());
+        
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()){
+                sum += rs.getDouble("nabavka_ukupno");
+            }
+            return sum;
+        } catch (SQLException ex) {
+            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    return sum;
+    }
+   
+    public String insertIntoNabavljac(String nabavljac_ime, String nabavljac_prezime, String nabavljac_email, String nabavljac_broj, String nabavljac_adresa) {
+
+    try {
+        String sql = "INSERT INTO nabavljac (nabavljac_ime, nabavljac_prezime, nabavljac_email,nabavljac_broj,nabavljac_adresa) VALUES ( ?, ?, ?, ?, ?)";
+
+        PreparedStatement statement = con.prepareStatement(sql);
+
+        statement.setString(1, nabavljac_ime);
+        statement.setString(2, nabavljac_prezime);
+        statement.setString(3, nabavljac_email);
+        statement.setString(4, nabavljac_broj);
+        statement.setString(5, nabavljac_adresa);
+
+        int rowsInserted = statement.executeUpdate();
+        if (rowsInserted > 0) {
+
+
+            return "Uspesno dodavanje!";
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+    }
+
+    return "Doslo je do greske, molimo pokusajte ponovo";
+}
+    
+    public int findNabavljacNajprodavanijeProizvoda(){
+        try {
+        String sql = "SELECT nabavljac.NABAVLJAC_ID,prodajalista.PROIZVOD_ID,SUM(PRODAJA_KOLICINA) FROM nabavljac,prodaja,prodajalista,nabavkalista,nabavka WHERE prodaja.PRODAJA_ID=prodajalista.PRODAJA_ID AND prodajalista.PROIZVOD_ID=nabavkalista.PROIZVOD_ID AND nabavkalista.NABAVKA_ID=nabavka.NABAVKA_ID AND nabavka.NABAVLJAC_ID=nabavljac.NABAVLJAC_ID GROUP BY nabavljac.NABAVLJAC_ID, prodajalista.PROIZVOD_ID LIMIT 1";
+        PreparedStatement statement = con.prepareStatement(sql);
+        LocalDate today = LocalDate.now();
+
+        
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()){
+                return rs.getInt("nabavljac_id");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+    
+    public String findNabavljacById(int nabavljac_id){
+        try {
+        String sql = "SELECT * FROM Nabavljac WHERE nabavljac_id=?";
+        PreparedStatement statement = con.prepareStatement(sql);
+        statement.setInt(1, nabavljac_id);
+        LocalDate today = LocalDate.now();
+
+        
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()){
+                return rs.getString("nabavljac_ime") + " " + rs.getString("nabavljac_prezime");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
     
     
+    public ObservableList<ProdajniObjekatPrihod> findProdajniObjekatPrihod(){
+        ObservableList<ProdajniObjekatPrihod> data = FXCollections.observableArrayList();
+        try {
+            String sql = "SELECT tipprodajnogobjekta.OBJEKAT_ID,tipprodajnogobjekta.OBJEKAT_NAZIV,SUM(prodaja.PRODAJA_CENA) AS UKUPAN_PRIHOD,SUM(prodaja.PRODAJA_CENA*0.20) AS UKUPAN_POREZ FROM prodaja,kasa,tipprodajnogobjekta WHERE MONTH(prodaja.PRODAJA_DATUM) = '01' AND prodaja.KASA_ID=kasa.KASA_ID AND kasa.OBJEKAT_ID=tipprodajnogobjekta.OBJEKAT_ID GROUP BY kasa.OBJEKAT_ID";
+            PreparedStatement statement = con.prepareStatement(sql);
+
+        ResultSet rs = statement.executeQuery();
+
+        while(rs.next()){
+            data.add(new ProdajniObjekatPrihod(rs.getInt("objekat_id"), rs.getString("objekat_naziv"),rs.getDouble("ukupan_prihod"),rs.getDouble("ukupan_porez")));
+        }
+        return data;
+    } catch (SQLException ex) {
+        Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+    }
+
+    return null;
+}
+    
+    public int findNajboljiProdavacUmesecu(){
+        try {
+        String sql = "SELECT ZAPOSLENI_ID,PRODAJA_DATUM,SUM(PRODAJA_CENA) FROM prodaja AS novalista WHERE MONTH(PRODAJA_DATUM) = '01' GROUP BY ZAPOSLENI_ID,MONTH(PRODAJA_DATUM),PRODAJA_DATUM ORDER BY SUM(PRODAJA_CENA)DESC LIMIT 0,1";
+        PreparedStatement statement = con.prepareStatement(sql);
+        LocalDate today = LocalDate.now();
+
+        
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()){
+                return rs.getInt("zaposleni_id");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+
+   
+    
+   // SELECT SUM(PRODAJA_CENA),SUM(PRODAJA_CENA*0.20) FROM prodaja AS prihodukupno WHERE MONTH(PRODAJA_DATUM) = '01'
 }

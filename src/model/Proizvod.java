@@ -26,16 +26,21 @@ public class Proizvod {
     private IntegerProperty tip_id_integer;
     private DoubleProperty proizvod_cena;
     private IntegerProperty proizvod_stanje;
-    private StringProperty proizvod_kolicina;
+    private String proizvodkolicina;
     private StringProperty proizvod_naziv;
     private SimpleBooleanProperty proizvodcheck = new SimpleBooleanProperty(false);
+
+    public Proizvod() {
+    
+    }
 
     public Proizvod(int proizvod_id, int tip_id, double proizvod_cena, int proizvod_kolicina, String proizvod_naziv) {
         this.proizvod_id = new SimpleIntegerProperty(proizvod_id);
         this.tip_id = new SimpleStringProperty(crud.findNazivByIdInTipProizvoda(tip_id));
         this.tip_id_integer = new SimpleIntegerProperty(tip_id);
         this.proizvod_cena = new SimpleDoubleProperty(proizvod_cena);
-        this.proizvod_kolicina = new SimpleStringProperty(""+1);
+        //this.proizvodkolicina = new SimpleStringProperty(""+1);
+        this.proizvodkolicina = ""+1;
         this.proizvod_stanje= new SimpleIntegerProperty(proizvod_kolicina);
         this.proizvod_naziv = new SimpleStringProperty(proizvod_naziv);
     }
@@ -57,8 +62,8 @@ public class Proizvod {
         return proizvod_cena;
     }
     
-    public StringProperty proizvodKolicinaProperty(){
-        return proizvod_kolicina;
+    public String proizvodkolicinaProperty(){
+        return proizvodkolicina;
     }
     
     public IntegerProperty proizvodStanjeProperty(){
@@ -106,12 +111,12 @@ public class Proizvod {
         this.proizvod_stanje.set(proizvod_stanje);
     }
     
-    public String getProizvod_kolicina(){
-        return this.proizvod_kolicina.get();
+    public String getProizvodkolicina(){
+        return this.proizvodkolicina;
     }
     
-    public void setProizvod_kolicina(String proizvod_kolicina){
-        this.proizvod_kolicina.set(proizvod_kolicina);
+    public void setProizvodkolicina(String proizvod_kolicina){
+        this.proizvodkolicina = proizvod_kolicina;
     }
 
     public String getProizvod_naziv() {

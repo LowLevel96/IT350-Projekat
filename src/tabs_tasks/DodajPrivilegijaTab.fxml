@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TableColumn?>
@@ -7,26 +6,25 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
-
 <Tab text="Dodaj Privilegiju" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tabs_controll.DodajPrivilegijaController">
-   <content>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0">
-         <children>
-            <TextField fx:id="txtNaziv" layoutX="14.0" layoutY="14.0" prefHeight="40.0" prefWidth="200.0" promptText="Privilegija naziv" />
-            <TextField fx:id="txtOpis" layoutX="224.0" layoutY="14.0" prefHeight="40.0" prefWidth="200.0" promptText="Privilegija opis" />
-            <Button fx:id="btnDodaj" layoutX="437.0" layoutY="14.0" mnemonicParsing="false" onAction="#dodajPrivilegija" prefHeight="40.0" prefWidth="149.0" text="Dodaj" />
-            <TableView fx:id="tableViewTask" editable="true" layoutY="73.0" prefHeight="288.0" prefWidth="600.0">
-               <columns>
-                    <TableColumn fx:id="checkBoxTableColumn" maxWidth="34.0" minWidth="26.0" prefWidth="34.0" resizable="false" sortable="false">
-                        <cellValueFactory><PropertyValueFactory property="taskcheck" /></cellValueFactory>
-                        <cellFactory><model.CheckBoxDodajPrivilegija /></cellFactory>
-                    </TableColumn>
-                  <TableColumn fx:id="tableColumnId" prefWidth="75.0" text="Id" />
-                  <TableColumn fx:id="tableColumnNaziv" prefWidth="265.0" text="Naziv Funkcionalnosti" />
-                  <TableColumn fx:id="tableColumnFile" prefWidth="259.0" text="Naziv Fajla" />
-               </columns>
-            </TableView>
-         </children>
-      </AnchorPane>
+<content>
+<AnchorPane prefHeight="1200" prefWidth="900">
+<children>
+<TextField fx:id="txtNaziv" layoutX="14.0" layoutY="14.0" prefHeight="40.0" prefWidth="200.0" promptText="Privilegija naziv" />
+<TextField fx:id="txtOpis" layoutX="224.0" layoutY="14.0" prefHeight="40.0" prefWidth="200.0" promptText="Privilegija opis" />
+<Button fx:id="btnDodaj" layoutX="437.0" layoutY="14.0" mnemonicParsing="false" onAction="#dodajPrivilegija" prefHeight="40.0" prefWidth="149.0" text="Dodaj" />
+<TableView fx:id="tableViewTask" editable="true" layoutY="73.0" prefHeight="900" prefWidth="1200">
+<columns>
+<TableColumn fx:id="checkBoxTableColumn" maxWidth="34.0" minWidth="26.0" prefWidth="34.0" resizable="false" sortable="false">
+<cellValueFactory><PropertyValueFactory property="taskcheck" /></cellValueFactory>
+<cellFactory><model.CheckBoxDodajPrivilegija /></cellFactory>
+</TableColumn>
+<TableColumn fx:id="tableColumnId" prefWidth="300.0" text="Id" />
+<TableColumn fx:id="tableColumnNaziv" prefWidth="450.0" text="Naziv Funkcionalnosti" />
+<TableColumn fx:id="tableColumnFile" prefWidth="450.0" text="Naziv Fajla" />
+</columns>
+</TableView>
+</children>
+</AnchorPane>
    </content>
 </Tab>

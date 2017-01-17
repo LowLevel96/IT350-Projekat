@@ -73,6 +73,12 @@
                   <Font size="19.0" />
                </font>
             </Label>
+            <Label layoutX="759.0" layoutY="793.0" text="Ukupan porez: " textFill="#ff1500">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelUkupanPorez" layoutX="934.0" layoutY="800.0" />
          </children>
       </AnchorPane>
    </content>

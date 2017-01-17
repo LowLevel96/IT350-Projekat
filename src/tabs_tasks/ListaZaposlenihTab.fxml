@@ -10,19 +10,19 @@
 
 <Tab text="Lista Zaposlenih" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tabs_controll.ListaZaposlenihController">
    <content>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+      <AnchorPane prefHeight="1200.0" prefWidth="900.0">
          <children>
-            <TableView fx:id="tableViewZaposleni" layoutX="-3.0" layoutY="54.0" prefHeight="309.0" prefWidth="604.0">
+            <TableView fx:id="tableViewZaposleni" layoutX="-3.0" layoutY="54.0" prefHeight="900.0" prefWidth="1200.0">
                <columns>
-                  <TableColumn fx:id="tableColumnId" prefWidth="42.0" text="Id" />
-                  <TableColumn fx:id="tableColumnIme" prefWidth="94.0" text="Ime" />
-                  <TableColumn fx:id="tableColumnPrezime" prefWidth="114.0" text="Prezime" />
-                  <TableColumn fx:id="tableColumnPrivilegija" prefWidth="124.0" text="Privilegija" />
-                  <TableColumn fx:id="tableColumnEmail" prefWidth="109.0" text="Email" />
-                  <TableColumn fx:id="tableColumnAdresa" prefWidth="120.0" text="Adresa" />
+                  <TableColumn fx:id="tableColumnId" prefWidth="100" text="Id" />
+                  <TableColumn fx:id="tableColumnIme" prefWidth="210" text="Ime" />
+                  <TableColumn fx:id="tableColumnPrezime" prefWidth="220" text="Prezime" />
+                  <TableColumn fx:id="tableColumnPrivilegija" prefWidth="220" text="Privilegija" />
+                  <TableColumn fx:id="tableColumnEmail" prefWidth="220" text="Email" />
+                  <TableColumn fx:id="tableColumnAdresa" prefWidth="220" text="Adresa" />
                </columns>
             </TableView>
-            <Button onAction="#refreshScene" layoutX="481.0" layoutY="11.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="106.0" text="Refresh" />
+            <Button onAction="#refreshScene" layoutX="380" layoutY="11.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="106.0" text="Refresh" />
             <ComboBox layoutX="14.0" layoutY="11.0" prefWidth="150.0" promptText="Sort By" />
             <TextField layoutX="182.0" layoutY="11.0" />
          </children>

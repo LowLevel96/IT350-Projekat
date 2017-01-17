@@ -31,7 +31,7 @@
                         <PropertyValueFactory property="proizvod_kolicina" />
                      </cellValueFactory>
                      <cellFactory>
-                        <model.TextFieldListaProizvoda />
+                        
                      </cellFactory>
                   </TableColumn>
                   <TableColumn fx:id="tableColumnNaziv" maxWidth="289.0" prefWidth="266.0" text="Naziv" />

@@ -25,31 +25,32 @@ import model.TipProizvoda;
 public class DodajProizvodController implements Initializable {
 
     CRUD crud = new CRUD();
-    
+
     @FXML private TextField txtNaziv;
     @FXML private TextField txtCena;
+    @FXML private TextField txtKolicina;
     @FXML private ComboBox<TipProizvoda> comboTip;
     @FXML private Button btnDodaj;
     @FXML private Label labelMessage;
-    
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        ObservableList<TipProizvoda> data = crud.queryTipProizvoda();
-        comboTip.setItems(data);
-    }
-    
-    @FXML public void dodajProizvod(){
-        
-        TipProizvoda tipProizvoda = comboTip.getSelectionModel().getSelectedItem();
-        
-        String naziv = txtNaziv.getText();
-        double cena = Double.parseDouble(txtCena.getText());
-        
-        String message = crud.insertIntoProizvod(tipProizvoda.getTip_id(), naziv, cena);
-        labelMessage.setText(message);
-    }
-    
+
+/**
+ * Initializes the controller class.
+ */
+@Override
+public void initialize(URL url, ResourceBundle rb) {
+    ObservableList<TipProizvoda> data = crud.queryTipProizvoda();
+    comboTip.setItems(data);
+}
+
+@FXML public void dodajProizvod(){
+
+    TipProizvoda tipProizvoda = comboTip.getSelectionModel().getSelectedItem();
+
+    String naziv = txtNaziv.getText();
+    double kolicina = Double.parseDouble(txtKolicina.getText());
+    double cena = Double.parseDouble(txtCena.getText());
+
+    String message = crud.insertIntoProizvod(tipProizvoda.getTip_id(), naziv,kolicina, cena);
+    labelMessage.setText(message);
+}
 }

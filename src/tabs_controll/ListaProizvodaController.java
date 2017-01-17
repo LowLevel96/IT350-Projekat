@@ -44,7 +44,7 @@ public class ListaProizvodaController implements Initializable {
     @FXML private TableColumn<Proizvod, String> tableColumnTip;
     @FXML private TableColumn<Proizvod, Double> tableColumnCena;
     @FXML private TableColumn<Proizvod, Integer> tableColumnStanje;
-    @FXML private TableColumn<Proizvod, Integer> tableColumnKolicina;
+    @FXML private TableColumn<Proizvod, Number> tableColumnKolicina;
     @FXML private TableColumn<Proizvod, String> tableColumnNaziv;
     
     
@@ -67,7 +67,7 @@ public class ListaProizvodaController implements Initializable {
         tableColumnTip.setCellValueFactory(new PropertyValueFactory("tip_id"));
         tableColumnCena.setCellValueFactory(new PropertyValueFactory("proizvod_cena"));
         tableColumnStanje.setCellValueFactory(new PropertyValueFactory("proizvod_stanje"));
-        //tableColumnKolicina.setCellValueFactory(new PropertyValueFactory("proizvod_kolicina"));
+        //tableColumnKolicina.setCellValueFactory(new PropertyValueFactory("proizvodkolicina"));
         tableColumnNaziv.setCellValueFactory(new PropertyValueFactory("proizvod_naziv"));
        
     }
@@ -79,6 +79,7 @@ public class ListaProizvodaController implements Initializable {
         for(Proizvod proizvod : tableViewLista.getItems()){
             if(proizvod.getProizvodcheck()){
                 System.out.println(proizvod.getProizvod_naziv());
+                //System.out.println(proizvod.getProizvodkolicina());
                 lista.add(proizvod);
             }
         }
@@ -91,18 +92,31 @@ public class ListaProizvodaController implements Initializable {
         }
         
         int kasa_id = Integer.parseInt(new RegisterFile().readFromFile());
-        int zaposleni_id = UserFactory.getInstance().getUser().getId();
+//        int zaposleni_id = UserFactory.getInstance().getUser().getId
+        int zaposleni_id = 1;
         int prodaja_kolicina = lista.size();
         String prodaja_datum = LocalDate.now().toString();
         
-        Date prodaja_datum2 = Date.valueOf(prodaja_datum);
         double prodaja_porez = prodaja_cena * 0.2;
         
         
-        System.out.println(crud.insertIntoProdaja(zaposleni_id, kasa_id, prodaja_kolicina, prodaja_cena, prodaja_datum2, prodaja_porez, lista));        
+        System.out.println(crud.insertIntoProdaja(zaposleni_id, kasa_id, 5, prodaja_cena, prodaja_datum, prodaja_porez, lista));        
         
-        //int zaposleni_id,int kasa_id,int prodaja_kolicina,double prodaja_cena,Date prodaja_datum,double prodaja_porez, ArrayList<Integer> lista_proizvoda
     }
     
     
 }
+
+
+/*
+
+                  <TableColumn fx:id="tableColumnKolicina" prefWidth="103.0" text="Kolicina">
+                     <cellValueFactory>
+                        <PropertyValueFactory property="proizvod_kolicina" />
+                     </cellValueFactory>
+                     <cellFactory>
+                        <model.TextFieldListaProizvoda />
+                     </cellFactory>
+                  </TableColumn>
+
+*/

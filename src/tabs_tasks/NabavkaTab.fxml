@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<Tab text="Nabavka" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tabs_controll.NabavkaController">
+   <content>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <TableView fx:id="tableViewNabavljac" layoutY="54.0" prefHeight="250.0" prefWidth="1200.0">
+               <columns>
+                  <TableColumn fx:id="tableColumnNabavljacCheck" prefWidth="101.0" >
+                     <cellValueFactory>
+                        <PropertyValueFactory property="nabavljaccheck" />
+                     </cellValueFactory>
+                     <cellFactory>
+                        <model.CheckBoxNabavka />
+                     </cellFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="tableColumnNabavljacId" prefWidth="105.0" text="Id" />
+                  <TableColumn fx:id="tableColumnNabavljacIme" prefWidth="164.0" text="Ime" />
+                  <TableColumn fx:id="tableColumnNabavljacPrezime" prefWidth="181.0" text="Prezime" />
+                  <TableColumn fx:id="tableColumnNabavljacEmail" prefWidth="237.0" text="Email" />
+                  <TableColumn fx:id="tableColumnNabavljacBroj" prefWidth="183.0" text="Broj" />
+                  <TableColumn fx:id="tableColumnNabavljacAdresa" prefWidth="228.0" text="Adresa" />
+               </columns>
+            </TableView>
+            <TableView fx:id="tableViewProizvod" editable="true" layoutY="363.0" prefHeight="300.0" prefWidth="1200.0">
+               <columns>
+                  <TableColumn fx:id="tableColumProizvodCheck" prefWidth="99.0">
+                     <cellValueFactory>
+                        <PropertyValueFactory property="proizvodcheck" />
+                     </cellValueFactory>
+                     <cellFactory>
+                        <model.CheckBoxListaProizvoda />
+                     </cellFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="tableColumnProizvodId" prefWidth="99.0" text="Id" />
+                  <TableColumn fx:id="tableColumnProizvodTip" prefWidth="257.0" text="Tip Proizvoda" />
+                  <TableColumn fx:id="tableColumnProizvodCena" prefWidth="252.0" text="Cena" />
+                  <TableColumn fx:id="tableColumnProizvodStanje" prefWidth="129.0" text="Stanje" />
+                  <TableColumn fx:id="tableColumnProizvodKolicina" prefWidth="103.0" text="Kolicina">
+                     <cellValueFactory>
+                        <PropertyValueFactory property="proizvod_kolicina" />
+                     </cellValueFactory>
+                     <cellFactory>
+                        <model.TextFieldListaProizvoda />
+                     </cellFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="tableColumnProizvodNaziv" maxWidth="289.0" prefWidth="266.0" text="Naziv" />
+               </columns>
+            </TableView>
+            <Label layoutX="31.0" layoutY="14.0" text="Nabavljaci:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="31.0" layoutY="322.0" text="Proizvodi:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnIzvrsiNabavku" layoutX="500.0" layoutY="723.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="Izvrsi nabavku" onAction="#izvrsiNabavku" />
+         </children>
+      </AnchorPane>
+   </content>
+</Tab>

@@ -5,9 +5,13 @@
  */
 package model;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
+import javafx.util.StringConverter;
+import javafx.util.converter.NumberStringConverter;
 
 /**
  *
@@ -17,7 +21,9 @@ public class TextFieldListaProizvoda implements Callback{
 
     @Override
     public TextFieldTableCell call(Object param){
-        TextFieldTableCell<Proizvod, String> textFieldCell = new TextFieldTableCell<>();
+        TextFieldTableCell<Proizvod, Number> textFieldCell = new TextFieldTableCell<>();
+        textFieldCell.setConverter(new NumberStringConverter());
+        
         return textFieldCell;
     }
 }

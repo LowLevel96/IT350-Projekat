@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<Tab text="Prodajni objekat prihod" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tabs_controll.ProdajniObjekatPrihodController">
+    <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+            <children>
+                <TableView fx:id="tableViewLista" prefHeight="900.0" prefWidth="1200.0">
+                    <columns>
+                        <TableColumn fx:id="tableColumnId" prefWidth="300.0" text="Id" />
+                        <TableColumn fx:id="tableColumnNaziv" prefWidth="300.0" text="Naziv" />
+                        <TableColumn fx:id="tableColumnPrihod" prefWidth="300.0" text="Prihod" />
+                        <TableColumn fx:id="tableColumnPorez" prefWidth="300.0" text="Porez" />
+                    </columns>
+                </TableView>
+            </children>
+        </AnchorPane>
+    </content>
+</Tab>

@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
-
 <Tab text="Lista Prodajnih Objekata" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tabs_controll.ListaProdajnihObjekataController">
-   <content>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0">
-         <children>
-            <TableView fx:id="tableViewLista" layoutY="38.0" prefHeight="324.0" prefWidth="600.0">
-               <columns>
-                  <TableColumn fx:id="tableColumnId" prefWidth="94.0" text="ID" />
-                  <TableColumn fx:id="tableColumnNaziv" prefWidth="337.0" text="Naziv" />
-                  <TableColumn fx:id="tableColumnBrojKasa" prefWidth="169.0" text="Broj Kasa" />
-               </columns>
-            </TableView>
-            <Button layoutX="431.0" layoutY="3.0" mnemonicParsing="false" onAction="#refreshScene" prefWidth="150.0" text="Refresh" />
-         </children>
-      </AnchorPane>
-   </content>
+<content>
+<AnchorPane prefHeight="1200.0" prefWidth="900.0">
+<children>
+<TableView fx:id="tableViewLista" layoutY="38.0" prefHeight="900" prefWidth="1200">
+<columns>
+<TableColumn fx:id="tableColumnId" prefWidth="300.0" text="ID" />
+<TableColumn fx:id="tableColumnNaziv" prefWidth="450.0" text="Naziv" />
+<TableColumn fx:id="tableColumnBrojKasa" prefWidth="450.0" text="Broj Kasa" />
+</columns>
+</TableView>
+<Button layoutX="970" layoutY="3.0" mnemonicParsing="false" onAction="#refreshScene" prefWidth="200" text="Refresh" />
+</children>
+</AnchorPane>
+</content>
 </Tab>

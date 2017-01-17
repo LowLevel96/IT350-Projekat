@@ -56,7 +56,7 @@ public class MainStageJava extends Application {
 //            
 //        }
         
-        /*
+        
         loader2 = new FXMLLoader(getClass().getResource("/tabs_tasks/AddUserTab.fxml"));
         Tab root2 =  loader2.load();
         root.getTabs().add(root2);
@@ -92,17 +92,35 @@ public class MainStageJava extends Application {
         loader2 = new FXMLLoader(getClass().getResource("/tabs_tasks/StanjeMagacinaTab.fxml"));
         root2 = loader2.load();
         root.getTabs().add(root2);
-       */
-//        loader2 = new FXMLLoader(getClass().getResource("/tabs_tasks/ListaProizvodaTab.fxml"));
-//        Tab root2 = loader2.load();
-//        root.getTabs().add(root2);
-////        
+       
+        loader2 = new FXMLLoader(getClass().getResource("/tabs_tasks/ListaProizvodaTab.fxml"));
+        root2 = loader2.load();
+        root.getTabs().add(root2);
+    
         loader2 = new FXMLLoader(getClass().getResource("/tabs_tasks/DnevniIzvestajTab.fxml"));
-        Tab root2 = loader2.load();
+        root2 = loader2.load();
         root.getTabs().add(root2);
         
+        loader2 = new FXMLLoader(getClass().getResource("/tabs_tasks/NabavkaTab.fxml"));
+        root2 = loader2.load();
+        root.getTabs().add(root2);
+//        
+        loader2 = new FXMLLoader(getClass().getResource("/tabs_tasks/ListaProizvodaTab.fxml"));
+        root2 = loader2.load();
+        root.getTabs().add(root2);
+        Object ottc = loader2.getController();
         
-        //Object ottc = loader2.getController();
+        loader2 = new FXMLLoader(getClass().getResource("/tabs_tasks/DodajNabavljacaTab.fxml"));
+        root2 = loader2.load();
+        root.getTabs().add(root2);
+        
+        loader2 = new FXMLLoader(getClass().getResource("/tabs_tasks/ZahtevaniUpitiTab.fxml"));
+        root2 = loader2.load();
+        root.getTabs().add(root2);
+        
+        loader2 = new FXMLLoader(getClass().getResource("/tabs_tasks/ProdajniObjekatPrihodTab.fxml"));
+        root2 = loader2.load();
+        root.getTabs().add(root2);
         
 //        root.getTabs().add(root2);
 //        
