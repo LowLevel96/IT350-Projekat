@@ -980,8 +980,4 @@ public class CRUD {
         return 0;
     }
 
-
-   
-    
-   // SELECT SUM(PRODAJA_CENA),SUM(PRODAJA_CENA*0.20) FROM prodaja AS prihodukupno WHERE MONTH(PRODAJA_DATUM) = '01'
 }

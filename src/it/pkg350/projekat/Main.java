@@ -26,14 +26,14 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       CRUD crud = new CRUD();
-       
-       ObservableList<Prodaja> lista = crud.findSoldProizvodTodayInProdaja();
-        for (Iterator<Prodaja> iterator = lista.iterator(); iterator.hasNext();) {
-            Prodaja next = iterator.next();
-            System.out.println(next.getProdaja_id());
-            
-        }
+//       CRUD crud = new CRUD();
+//       
+//       ObservableList<Prodaja> lista = crud.findSoldProizvodTodayInProdaja();
+//        for (Iterator<Prodaja> iterator = lista.iterator(); iterator.hasNext();) {
+//            Prodaja next = iterator.next();
+//            System.out.println(next.getProdaja_id());
+//            
+//        }
     }
 
     public Main() {

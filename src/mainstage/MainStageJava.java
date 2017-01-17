@@ -43,20 +43,17 @@ public class MainStageJava extends Application {
         MainStageController msc = loader.getController();
         
         
-//        ArrayList<Integer> listaTaskova = new ArrayList<>();
-//        listaTaskova.add(1);
-//        listaTaskova.add(3);
-//        listaTaskova.add(7);
+        //ArrayList<Integer> listaTaskova = new ArrayList<>();
         FXMLLoader loader2;
-//        for (Iterator<TaskModel> iterator = list.iterator(); iterator.hasNext();) {
-//            TaskModel next = iterator.next();
-//            loader2 = new FXMLLoader(getClass().getResource("/tabs_tasks/" + next.getTask_file()));
-//            Tab root2 =  loader2.load();
-//            root.getTabs().add(root2);
-//            
-//        }
+        for (Iterator<TaskModel> iterator = list.iterator(); iterator.hasNext();) {
+            TaskModel next = iterator.next();
+            loader2 = new FXMLLoader(getClass().getResource("/tabs_tasks/" + next.getTask_file()));
+            Tab root2 =  loader2.load();
+            root.getTabs().add(root2);
+            
+        }
         
-        
+        /*
         loader2 = new FXMLLoader(getClass().getResource("/tabs_tasks/AddUserTab.fxml"));
         Tab root2 =  loader2.load();
         root.getTabs().add(root2);
@@ -121,7 +118,7 @@ public class MainStageJava extends Application {
         loader2 = new FXMLLoader(getClass().getResource("/tabs_tasks/ProdajniObjekatPrihodTab.fxml"));
         root2 = loader2.load();
         root.getTabs().add(root2);
-        
+        */
 //        root.getTabs().add(root2);
 //        
 //        loader2 = new FXMLLoader(getClass().getResource("OneTabTest.fxml"));
@@ -137,16 +134,16 @@ public class MainStageJava extends Application {
         
     }
 
-//    public MainStageJava(int id, String name, String lastname, ObservableList<TaskModel> list) {
-//        this.id = id;
-//        this.name = name;
-//        this.lastname = lastname;
-//        this.list = list;
-//    }
-
-    public static void main(String[] args) {
-        launch(args);
+    public MainStageJava(int id, String name, String lastname, ObservableList<TaskModel> list) {
+        this.id = id;
+        this.name = name;
+        this.lastname = lastname;
+        this.list = list;
     }
+
+//    public static void main(String[] args) {
+//        launch(args);
+//    }
 
     public int getId() {
         return id;
