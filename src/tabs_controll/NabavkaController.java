@@ -104,11 +104,13 @@ public class NabavkaController implements Initializable {
         for(Proizvod proizvod : tableViewProizvod.getItems()){
             if(proizvod.getProizvodcheck()){
                 list2.add(proizvod);
+                crud.updateKolicinaInProizvodById(crud.findKolicinaInProizvodById(proizvod.getProizvod_id()), 2, proizvod.getProizvod_id());
             }
         }
         
         LocalDate today = LocalDate.now();
         int nabavka_id = crud.insertIntoNabavka(nabavljac_id, list2.size(), today.toString());
+        
         
         for (Iterator<Proizvod> iterator = list2.iterator(); iterator.hasNext();) {
             Proizvod next = iterator.next();

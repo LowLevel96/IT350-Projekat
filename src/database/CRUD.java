@@ -781,21 +781,6 @@ public class CRUD {
         return null;
     }
     
-    public void updateKolicinaInProizvodById(int id, int kolicina){
-        try {
-            
-            String sql = "UPDATE proizvod SET proizvod_kolicina=? WHERE proizvod_id=?";
-            int newKolicina = findKolicinaInProizvodById(id) - kolicina;
-                 PreparedStatement statement = con.prepareStatement(sql);
-                 statement.setInt(1, newKolicina);
-                 statement.setInt(2, id);
-
-                 int rowsInserted = statement.executeUpdate();
-            } catch (SQLException ex) {
-            
-            }
-    }
-    
     public String findZaposleniImeById(int zaposleni_id){
          try {
             String sql = "SELECT zaposleni_ime, zaposleni_prezime FROM zaposleni WHERE zaposleni_id=?";
@@ -979,5 +964,21 @@ public class CRUD {
         }
         return 0;
     }
-
+    
+    public int updateKolicinaInProizvodById(int kolicina_old, int kolicina_add, int proizvod_id){
+        try {
+        String sql = "UPDATE proizvod SET PROIZVOD_KOLICINA=? WHERE PROIZVOD_ID =?";
+        PreparedStatement statement = con.prepareStatement(sql);
+        statement.setInt(1, kolicina_old+kolicina_add);
+        statement.setInt(2, proizvod_id);
+        
+        statement.executeUpdate();
+        
+        } catch (SQLException ex) {
+            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+    
 }
+
